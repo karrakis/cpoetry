@@ -1,0 +1,2 @@
+class PoemBill < ApplicationRecord
+end

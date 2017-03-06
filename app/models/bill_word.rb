@@ -1,0 +1,2 @@
+class BillWord < ApplicationRecord
+end

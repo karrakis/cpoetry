@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  word_kid: 1
+  word: MyString
+
+two:
+  word_kid: 1
+  word: MyString

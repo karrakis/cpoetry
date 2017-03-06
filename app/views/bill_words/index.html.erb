@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Bill Words</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Bill kid</th>
+      <th>Word kid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bill_words.each do |bill_word| %>
+      <tr>
+        <td><%= bill_word.bill_kid %></td>
+        <td><%= bill_word.word_kid %></td>
+        <td><%= link_to 'Show', bill_word %></td>
+        <td><%= link_to 'Edit', edit_bill_word_path(bill_word) %></td>
+        <td><%= link_to 'Destroy', bill_word, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Bill Word', new_bill_word_path %>

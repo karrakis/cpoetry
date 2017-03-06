@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Poem Bills</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Poem kid</th>
+      <th>Bill kid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @poem_bills.each do |poem_bill| %>
+      <tr>
+        <td><%= poem_bill.poem_kid %></td>
+        <td><%= poem_bill.bill_kid %></td>
+        <td><%= link_to 'Show', poem_bill %></td>
+        <td><%= link_to 'Edit', edit_poem_bill_path(poem_bill) %></td>
+        <td><%= link_to 'Destroy', poem_bill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Poem Bill', new_poem_bill_path %>

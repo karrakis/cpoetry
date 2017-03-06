@@ -1,0 +1,27 @@
+<%= form_for(poem_bill) do |f| %>
+  <% if poem_bill.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(poem_bill.errors.count, "error") %> prohibited this poem_bill from being saved:</h2>
+
+      <ul>
+      <% poem_bill.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :poem_kid %>
+    <%= f.number_field :poem_kid %>
+  </div>
+
+  <div class="field">
+    <%= f.label :bill_kid %>
+    <%= f.number_field :bill_kid %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

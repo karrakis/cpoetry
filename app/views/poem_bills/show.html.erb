@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Poem kid:</strong>
+  <%= @poem_bill.poem_kid %>
+</p>
+
+<p>
+  <strong>Bill kid:</strong>
+  <%= @poem_bill.bill_kid %>
+</p>
+
+<%= link_to 'Edit', edit_poem_bill_path(@poem_bill) %> |
+<%= link_to 'Back', poem_bills_path %>
