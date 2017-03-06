@@ -11,6 +11,9 @@ class WordsController < BaseApiController
     unless @json.has_key?('word')
       render nothing: true, status: :bad_request
     end
+    unless @json['word'].has_key?('word') and @json['word'].has_key?('word_kid')
+      render nothing: true, status: :bad_request
+    end
   end
 
   before_action only: :create do
