@@ -3,8 +3,8 @@ class BaseApiController < ApplicationController
 
    private
    def authenticate_user_from_token!
-    Rails.logger.info(@json)
-    Rails.logger.info("what the ever-living fuck")
+    Rails.logger.debug(@json)
+    Rails.logger.debug("what the ever-living fuck")
      if !@json['api_token']
        render nothing: true, status: :unauthorized
      else
@@ -19,6 +19,6 @@ class BaseApiController < ApplicationController
 
    def parse_request
      @json = JSON.parse(request.body.read)
-     Rails.logger.info("what the ever-living fuck")
+     Rails.logger.debug("what the ever-living fuck")
    end
 end
