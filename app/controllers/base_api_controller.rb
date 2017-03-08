@@ -19,5 +19,6 @@ class BaseApiController < ApplicationController
 
    def parse_request
      @json = JSON.parse(request.body.read)
+     Rails.logger.info("what the ever-living fuck")
    end
 end
