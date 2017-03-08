@@ -2,22 +2,19 @@ class WordsController < BaseApiController
   before_action :find_word, only: [:show, :update]
 
   before_action only: :create do
-    unless @json.has_key?('word') && @json['word'].responds_to?(:[]) && @json['word']['word']
+    unless @json.has_key?('body') && @json['body'].responds_to?(:[]) && @json['body']['word']
       render nothing: true, status: :bad_request
     end
   end
 
   before_action only: :update do
-    unless @json.has_key?('word')
-      render nothing: true, status: :bad_request
-    end
-    unless @json['word'].has_key?('word') and @json['word'].has_key?('word_kid')
+    unless @json.has_key?('body')
       render nothing: true, status: :bad_request
     end
   end
 
   before_action only: :create do
-    @word = Word.find_by_word(@json['word']['word'])
+    @word = Word.find_by_word(@json['body']['word'])
   end
 
   def index
@@ -33,7 +30,7 @@ class WordsController < BaseApiController
       render nothing: true, status: :conflict
     else
       @word = Word.new
-      @word.assign_attributes(@json['word'])
+      @word.assign_attributes(@json['body'])
       if @word.save
         render json: @word
       else
@@ -43,7 +40,7 @@ class WordsController < BaseApiController
   end
 
   def update
-    @word.assign_attributes(@json['word'])
+    @word.assign_attributes(@json['body'])
     if @word.save
         render json: @word
     else
