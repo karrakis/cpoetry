@@ -1,6 +1,6 @@
 class BaseApiController < ApplicationController
    before_action :parse_request, :authenticate_user_from_token!
-
+   Rails.logger.debug("what the ever-living fuck")
    private
    def authenticate_user_from_token!
     Rails.logger.debug(@json)
