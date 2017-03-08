@@ -4,6 +4,7 @@ class BaseApiController < ApplicationController
    private
    def authenticate_user_from_token!
     logger.info(@json)
+    logger.info("what the ever-living fuck")
      if !@json['api_token']
        render nothing: true, status: :unauthorized
      else
