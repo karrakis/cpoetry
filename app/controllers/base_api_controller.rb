@@ -1,5 +1,5 @@
 class BaseApiController < ApplicationController
-  before_action :parse_request, :authenticate
+  before_action :authenticate, :parse_request
 
   private
   def authenticate
