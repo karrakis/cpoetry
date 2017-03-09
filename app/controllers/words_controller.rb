@@ -31,6 +31,7 @@ class WordsController < BaseApiController
     if @word.present?
       render nothing: true, status: :conflict
     else
+      logger.debug(@json)
       @word = Word.new
       @word.assign_attributes(@json['body'])
       if @word.save
