@@ -4,7 +4,7 @@ class WordsController < BaseApiController
   before_action only: :create do
     logger.debug("a")
     logger.debug(@json)
-    unless @json.has_key?('word') && @json['word'].responds_to?(:[]) && @json['word']
+    unless @json.has_key?('word') && @json['word']
       render nothing: true, status: :bad_request
     end
   end
