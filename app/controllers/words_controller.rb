@@ -2,6 +2,7 @@ class WordsController < BaseApiController
   before_action :find_word, only: [:show, :update]
 
   before_action only: :create do
+    logger.debug(@json)
     unless @json.has_key?('body') && @json['body'].responds_to?(:[]) && @json['body']['word']
       render nothing: true, status: :bad_request
     end
