@@ -1,11 +1,10 @@
 class BaseApiController < ApplicationController
    before_action :parse_request, :authenticate_user_from_token!
-   logger.debug("what the ever-living fuck")
+   logger.debug("what the ever-living fuck 0")
    private
    def authenticate_user_from_token!
-    Rails.logger.level = 0
     logger.debug(@json)
-    logger.debug("what the ever-living fuck")
+    logger.debug("what the ever-living fuck 2")
     puts @json
     puts "why the ever-living fuck"
      if !@json['api_token']
@@ -22,7 +21,7 @@ class BaseApiController < ApplicationController
 
    def parse_request
      @json = JSON.parse(request.body.read)
-     logger.debug("what the ever-living fuck")
+     logger.debug("what the ever-living fuck 1")
      puts "why the ever-living fuck"
    end
 end
