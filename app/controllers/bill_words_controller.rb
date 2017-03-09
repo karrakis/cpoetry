@@ -1,74 +1,56 @@
-class BillWordsController < ApplicationController
-  before_action :set_bill_word, only: [:show, :edit, :update, :destroy]
+class WordsController < BaseApiController
+  before_action :find_word, only: [:show, :update]
 
-  # GET /bill_words
-  # GET /bill_words.json
+  before_action only: :create do
+    unless @json.has_key?('word_kid') && @json['word_kid'] && @json.has_key?('bill_kid') && @json['bill_kid']
+      render nothing: true, status: :bad_request
+    end
+  end
+
+  before_action only: :update do
+    unless @json.has_key?('word_kid') and @json.has_key('bill_kid')
+      render nothing: true, status: :bad_request
+    end
+  end
+
+  before_action only: :create do
+    @word = Word.find_by bill_kid: @json['bill_kid'], word_kid: @json['word_kid']
+  end
+
   def index
-    @bill_words = BillWord.all
+    render json: Word.where('owner_id = ?', @user.id)
   end
 
-  # GET /bill_words/1
-  # GET /bill_words/1.json
   def show
+    render json: @word
   end
 
-  # GET /bill_words/new
-  def new
-    @bill_word = BillWord.new
-  end
-
-  # GET /bill_words/1/edit
-  def edit
-  end
-
-  # POST /bill_words
-  # POST /bill_words.json
   def create
-    @bill_word = BillWord.new(bill_word_params)
-
-    respond_to do |format|
-      if @bill_word.save
-        format.html { redirect_to @bill_word, notice: 'Bill word was successfully created.' }
-        format.json { render :show, status: :created, location: @bill_word }
+    if @word.present?
+      render nothing: true, status: :conflict
+    else
+      @word = Word.new
+      @word.assign_attributes(@json)
+      if @word.save
+        render json: @word
       else
-        format.html { render :new }
-        format.json { render json: @bill_word.errors, status: :unprocessable_entity }
+         render nothing: true, status: :bad_request
       end
     end
   end
 
-  # PATCH/PUT /bill_words/1
-  # PATCH/PUT /bill_words/1.json
   def update
-    respond_to do |format|
-      if @bill_word.update(bill_word_params)
-        format.html { redirect_to @bill_word, notice: 'Bill word was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bill_word }
-      else
-        format.html { render :edit }
-        format.json { render json: @bill_word.errors, status: :unprocessable_entity }
-      end
+    @word.assign_attributes(@json)
+    if @word.save
+        render json: @word
+    else
+        render nothing: true, status: :bad_request
     end
   end
 
-  # DELETE /bill_words/1
-  # DELETE /bill_words/1.json
-  def destroy
-    @bill_word.destroy
-    respond_to do |format|
-      format.html { redirect_to bill_words_url, notice: 'Bill word was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bill_word
-      @bill_word = BillWord.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bill_word_params
-      params.require(:bill_word).permit(:bill_kid, :word_kid)
-    end
+ private
+ def find_word
+   @word = Word.find_by_word(params[:word])
+   render nothing: true, status: :not_found unless @word.present? && @word.user == @user
+ end
 end
