@@ -24,6 +24,8 @@ class BaseApiController < ApplicationController
    end
 
    def parse_request
+     logger.debug("what the ever-living fuck x")
+     puts "why the ever-living fuck"
      @json = JSON.parse(request.body.read)
      logger.debug("what the ever-living fuck 1")
      puts "why the ever-living fuck"
