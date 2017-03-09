@@ -2,7 +2,7 @@ class WordsController < BaseApiController
   before_action :find_word, only: [:show, :update]
 
   before_action only: :create do
-    logger.debug(@json)
+    logger.debug("a")
     unless @json.has_key?('body') && @json['body'].responds_to?(:[]) && @json['body']['word']
       render nothing: true, status: :bad_request
     end
@@ -15,6 +15,7 @@ class WordsController < BaseApiController
   end
 
   before_action only: :create do
+    logger.debug("b")
     @word = Word.find_by_word(@json['body']['word'])
   end
 
@@ -51,6 +52,7 @@ class WordsController < BaseApiController
 
  private
  def find_word
+  logger.debug("c")
    @word = Word.find_by_word(params[:word])
    render nothing: true, status: :not_found unless @word.present? && @word.user == @user
  end
