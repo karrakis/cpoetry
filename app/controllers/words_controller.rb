@@ -34,7 +34,7 @@ class WordsController < BaseApiController
     else
       logger.debug(@json)
       @word = Word.new
-      @word.assign_attributes(@json['word'])
+      @word.assign_attributes(@json)
       if @word.save
         render json: @word
       else
