@@ -4,20 +4,20 @@ class WordsController < BaseApiController
   before_action only: :create do
     logger.debug("a")
     logger.debug(@json)
-    unless @json.has_key?('body') && @json['body'].responds_to?(:[]) && @json['body']['word']
+    unless @json.has_key?('word') && @json['word'].responds_to?(:[]) && @json['word']
       render nothing: true, status: :bad_request
     end
   end
 
   before_action only: :update do
-    unless @json.has_key?('body')
+    unless @json.has_key?('word')
       render nothing: true, status: :bad_request
     end
   end
 
   before_action only: :create do
     logger.debug("b")
-    @word = Word.find_by_word(@json['body']['word'])
+    @word = Word.find_by_word(@json['word'])
   end
 
   def index
@@ -34,7 +34,7 @@ class WordsController < BaseApiController
     else
       logger.debug(@json)
       @word = Word.new
-      @word.assign_attributes(@json['body'])
+      @word.assign_attributes(@json['word'])
       if @word.save
         render json: @word
       else
@@ -44,7 +44,7 @@ class WordsController < BaseApiController
   end
 
   def update
-    @word.assign_attributes(@json['body'])
+    @word.assign_attributes(@json['word'])
     if @word.save
         render json: @word
     else
