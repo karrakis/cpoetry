@@ -50,6 +50,7 @@ class BillWordsController < BaseApiController
 
  private
  def find_billword
+  logger.debug(@json)
   if @json['id']
     @billword = BillWord.find_by id: params[:id]
   elsif @json['word_kid']
@@ -57,7 +58,9 @@ class BillWordsController < BaseApiController
   elsif @json['bill_kid']
     @billword = BillWord.find_by bill_kid: params[:bill_kid]
   else
+    logger.debug("correct through this point")
     @billword = BillWord.last
+    logger.debug(@billword)
   end
    render nothing: true, status: :not_found unless @billword.present?
  end
