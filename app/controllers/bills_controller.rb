@@ -59,6 +59,6 @@ class BillsController < BaseApiController
     @bill = Bill.last
     logger.debug(@bill)
   end
-  render nothing: true, status: :not_found unless @bill.present? && @bill.user == @user
+  render nothing: true, status: :not_found unless @bill.present?
  end
 end

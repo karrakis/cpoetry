@@ -57,6 +57,6 @@ class WordsController < BaseApiController
   else
     @word = Word.last
   end
-  render nothing: true, status: :not_found unless @word.present? && @word.user == @user
+  render nothing: true, status: :not_found unless @word.present?
  end
 end
