@@ -59,6 +59,6 @@ class BillWordsController < BaseApiController
   else
     @billword = BillWord.last
   end
-   render nothing: true, status: :not_found unless @billword.present? && @billword.user == @user
+   render nothing: true, status: :not_found unless @billword.present?
  end
 end
