@@ -1,5 +1,5 @@
-class WordsController < BaseApiController
-  before_action :find_word, only: [:show, :update]
+class BillsController < BaseApiController
+  before_action :find_bill, only: [:show, :update]
 
   before_action only: :create do
     unless @json.has_key?('link') && @json['link']
@@ -14,25 +14,25 @@ class WordsController < BaseApiController
   end
 
   before_action only: :create do
-    @word = Word.find_by link: @json['link']
+    @bill = Bill.find_by link: @json['link']
   end
 
   def index
-    render json: Word.where('owner_id = ?', @user.id)
+    render json: Bill.where('owner_id = ?', @user.id)
   end
 
   def show
-    render json: @word
+    render json: @bill
   end
 
   def create
-    if @word.present?
+    if @bill.present?
       render nothing: true, status: :conflict
     else
-      @word = Word.new
-      @word.assign_attributes(@json)
-      if @word.save
-        render json: @word
+      @bill = Bill.new
+      @bill.assign_attributes(@json)
+      if @bill.save
+        render json: @bill
       else
          render nothing: true, status: :bad_request
       end
@@ -40,17 +40,17 @@ class WordsController < BaseApiController
   end
 
   def update
-    @word.assign_attributes(@json['link'])
-    if @word.save
-        render json: @word
+    @bill.assign_attributes(@json['link'])
+    if @bill.save
+        render json: @bill
     else
         render nothing: true, status: :bad_request
     end
   end
 
  private
- def find_word
-   @word = Word.find_by_word(params[:word])
-   render nothing: true, status: :not_found unless @word.present? && @word.user == @user
+ def find_bill
+   @bill = Bill.find_by_word(params[:word])
+   render nothing: true, status: :not_found unless @bill.present? && @bill.user == @user
  end
 end

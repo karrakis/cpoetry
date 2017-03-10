@@ -1,5 +1,5 @@
-class WordsController < BaseApiController
-  before_action :find_word, only: [:show, :update]
+class BillWordsController < BaseApiController
+  before_action :find_billword, only: [:show, :update]
 
   before_action only: :create do
     unless @json.has_key?('word_kid') && @json['word_kid'] && @json.has_key?('bill_kid') && @json['bill_kid']
@@ -14,25 +14,25 @@ class WordsController < BaseApiController
   end
 
   before_action only: :create do
-    @word = Word.find_by bill_kid: @json['bill_kid'], word_kid: @json['word_kid']
+    @billword = BillWord.find_by bill_kid: @json['bill_kid'], word_kid: @json['word_kid']
   end
 
   def index
-    render json: Word.where('owner_id = ?', @user.id)
+    render json: BillWord.where('owner_id = ?', @user.id)
   end
 
   def show
-    render json: @word
+    render json: @billword
   end
 
   def create
-    if @word.present?
+    if @billword.present?
       render nothing: true, status: :conflict
     else
-      @word = Word.new
-      @word.assign_attributes(@json)
-      if @word.save
-        render json: @word
+      @billword = BillWord.new
+      @billword.assign_attributes(@json)
+      if @billword.save
+        render json: @billword
       else
          render nothing: true, status: :bad_request
       end
@@ -40,17 +40,25 @@ class WordsController < BaseApiController
   end
 
   def update
-    @word.assign_attributes(@json)
-    if @word.save
-        render json: @word
+    @billword.assign_attributes(@json)
+    if @billword.save
+        render json: @billword
     else
         render nothing: true, status: :bad_request
     end
   end
 
  private
- def find_word
-   @word = Word.find_by_word(params[:word])
-   render nothing: true, status: :not_found unless @word.present? && @word.user == @user
+ def find_billword
+  if @json['id']
+    @billword = BillWord.find_by id: params[:id]
+  elsif @json['word_kid']
+    @billword = BillWord.find_by word_kid: params[:word_kid]
+  elsif @json['bill_kid']
+    @billword = BillWord.find_by bill_kid: params[:bill_kid]
+  else
+    @billword = BillWord.last
+  end
+   render nothing: true, status: :not_found unless @billword.present? && @billword.user == @user
  end
 end
