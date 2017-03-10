@@ -18,7 +18,6 @@ class BillWordsController < BaseApiController
   end
 
   def index
-    logger.debug("this shouldn't be happening")
     render json: @billword
   end
 
@@ -59,7 +58,6 @@ class BillWordsController < BaseApiController
   elsif @json['bill_kid']
     @billword = BillWord.find_by bill_kid: params[:bill_kid]
   else
-    logger.debug("correct through this point")
     @billword = BillWord.last
     logger.debug(@billword)
   end
