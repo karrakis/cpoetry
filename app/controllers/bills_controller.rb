@@ -1,5 +1,5 @@
 class BillsController < BaseApiController
-  before_action :find_bill, only: [:show, :update]
+  before_action :find_bill, only: [:show, :update, :index]
 
   before_action only: :create do
     unless @json.has_key?('link') && @json['link']
@@ -18,7 +18,7 @@ class BillsController < BaseApiController
   end
 
   def index
-    render json: Bill.where('owner_id = ?', @user.id)
+    render json: @bill
   end
 
   def show
@@ -50,7 +50,15 @@ class BillsController < BaseApiController
 
  private
  def find_bill
-   @bill = Bill.find_by_word(params[:word])
-   render nothing: true, status: :not_found unless @bill.present? && @bill.user == @user
+  logger.debug(@json)
+  if @json['id']
+    @bill = Bill.find_by id: params[:id]
+  elsif @json['bill_kid']
+    @bill = Bill.find_by bill_kid: params[:bill_kid]
+  else
+    @bill = Bill.last
+    logger.debug(@bill)
+  end
+  render nothing: true, status: :not_found unless @bill.present? && @bill.user == @user
  end
 end

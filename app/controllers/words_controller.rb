@@ -1,5 +1,5 @@
 class WordsController < BaseApiController
-  before_action :find_word, only: [:show, :update]
+  before_action :find_word, only: [:show, :update, :index]
 
   before_action only: :create do
     unless @json.has_key?('word') && @json['word']
@@ -18,7 +18,7 @@ class WordsController < BaseApiController
   end
 
   def index
-    render json: Word.where('owner_id = ?', @user.id)
+    render json: @word
   end
 
   def show
@@ -50,7 +50,13 @@ class WordsController < BaseApiController
 
  private
  def find_word
-   @word = Word.find_by_word(params[:word])
-   render nothing: true, status: :not_found unless @word.present? && @word.user == @user
+  if @json['id']
+    @word = Word.find_by id: params[:id]
+  elsif @json['word_kid']
+    @word = Word.find_by word_kid: params[:word_kid]
+  else
+    @word = Word.last
+  end
+  render nothing: true, status: :not_found unless @word.present? && @word.user == @user
  end
 end
