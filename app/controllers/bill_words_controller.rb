@@ -1,5 +1,5 @@
 class BillWordsController < BaseApiController
-  before_action :find_billword, only: [:show, :update]
+  before_action :find_billword, only: [:show, :update, :index]
 
   before_action only: :create do
     unless @json.has_key?('word_kid') && @json['word_kid'] && @json.has_key?('bill_kid') && @json['bill_kid']
@@ -19,7 +19,7 @@ class BillWordsController < BaseApiController
 
   def index
     logger.debug("this shouldn't be happening")
-    render json: BillWord.where('owner_id = ?', @user.id)
+    render json: @billword
   end
 
   def show
