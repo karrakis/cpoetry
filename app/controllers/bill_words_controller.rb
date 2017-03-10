@@ -18,6 +18,7 @@ class BillWordsController < BaseApiController
   end
 
   def index
+    logger.debug("this shouldn't be happening")
     render json: BillWord.where('owner_id = ?', @user.id)
   end
 
