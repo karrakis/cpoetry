@@ -1,5 +1,5 @@
 class Poem < ApplicationRecord
-	public
+	
 	def write_poem
 		@words = Word.all.sample(250).map{|m| m.as_json.merge(syllables: syllables(m['word']))}
 		return @words.first
