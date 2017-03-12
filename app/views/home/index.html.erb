@@ -47,7 +47,9 @@
 				<h6>Written by <a href="#">John Smith</a> on August 12, 2012.</h6>
 				<div class="row">
 					<div class="large-6 columns">
-						<p><%= @poem %></p>
+					<% @poem.each do |line| %>
+						<p><%= line %></p>
+					<% end %>
 					</div>
 					<div class="large-6 columns">
 						<img src="https://placehold.it/336x280&text=[img]"/>
