@@ -6,7 +6,11 @@ class Poem < ApplicationRecord
 		@words = Word.all.sample(500).reject{|m| m['word'].match(/[^a-z]/) }.map{|m| m.as_json.merge(syllables: self.syllables(m['word'])) }
 		@words = @words.map{|m| m[:syllables] > 0 ? m : m.merge({syllables: 1})}
 		
-		sorted = {}
+		randomize = Random.new
+
+		sorted = Hash.new
+
+		tgr = EngTagger.new
 
 		@words.each do |hash|
 			sorted[hash[:syllables]] ||= []
