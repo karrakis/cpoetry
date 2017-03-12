@@ -4,13 +4,13 @@ class Poem < ApplicationRecord
 
 	def self.write_poem
 		@words = Word.all.sample(500).reject{|m| m['word'].match(/[^a-z]/) }.map{|m| m.as_json.merge(syllables: self.syllables(m['word'])) }
-		@words = @words.map{|m| m['syllables'] > 0 ? m : m.merge({syllables: 1})}
+		@words = @words.map{|m| m[:syllables] > 0 ? m : m.merge({syllables: 1})}
 		
 		sorted = {}
 
 		@words.each do |hash|
-			sorted[hash['syllables']] ||= []
-			sorted[hash['syllables']] << hash['word']
+			sorted[hash[:syllables]] ||= []
+			sorted[hash[:syllables]] << hash['word']
 		end
 
 		if !sorted.has_key?(1)
