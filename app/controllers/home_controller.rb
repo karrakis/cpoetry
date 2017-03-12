@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
 	def index
-		@poem = Poem.new
-		@poem
+		@poem = Poem.write_poem
 	end
 end
