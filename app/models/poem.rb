@@ -1,5 +1,5 @@
 class Poem < ApplicationRecord
-	def self.write_poem
+	def write_poem
 		@words = Word.all.sample(250).map{|m| m.merge(syllables: syllables(m['word']))}
 		return @words.first
 	end
