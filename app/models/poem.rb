@@ -49,7 +49,7 @@ class Poem < ApplicationRecord
 			output << line.strip.capitalize
 		end
 
-		output.join("<br>")
+		output.join("\n")
 	end
 
 	def self.syllables(word)
