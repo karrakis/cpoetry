@@ -3,7 +3,7 @@ class Poem < ApplicationRecord
 	end
 
 	def self.write_poem
-		@words = Word.where("word REGEXP ?", '^[a-z]+$').sample(250).map{|m| m.as_json.merge(syllables: self.syllables(m['word']))}
+		@words = Word.where(word: /^[a-z]+$/).sample(250).map{|m| m.as_json.merge(syllables: self.syllables(m['word']))}
 		return @words.first
 	end
 
