@@ -1,3 +1,3 @@
 class Home < ApplicationRecord
-	@poem = Poem.get_poem
+	@poem = Poem.write_poem
 end
