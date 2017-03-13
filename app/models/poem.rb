@@ -59,7 +59,7 @@ class Poem < ApplicationRecord
 				line: m[:line],
 				linewords: m[:linewords].map{|n|
 					bill_kid = BillWord.find_by(word_kid: n['word_kid'])
-					bill_kid = bill_kid ? bill_kid.sample(1).first['bill_kid'] : nil
+					bill_kid = bill_kid ? bill_kid.all.sample.first['bill_kid'] : nil
 					{
 						word: n['word'],
 						bill: Bill.find_by(bill_kid: bill_kid ? bill_kid : 0)
