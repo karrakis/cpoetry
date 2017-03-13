@@ -51,8 +51,8 @@
 			<article>
 				<h3><a href="#">Legislative Language Sources:</a></h3>
 				<div class="large-12 columns">
-					<% @legislation.each do |line| %>
-						<% line.each do |word| %>
+					<% @legislation.uniq.each do |line| %>
+						<% line.uniq.each do |word| %>
 							<p><strong><%= word[:word] %></strong> was found in <a href = <%= "#{word[:bill]['link']}" %> ><%= word[:bill]['link'] %></a></p>
 						<% end %>
 					<% end %>
