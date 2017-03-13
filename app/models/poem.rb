@@ -56,7 +56,7 @@ class Poem < ApplicationRecord
 
 		output = output.map{|m| 
 			{
-				line: m[:line]
+				line: m[:line],
 				linewords: m[:linewords].map{|n|
 					{
 						word: n['word'],
