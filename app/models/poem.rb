@@ -14,7 +14,7 @@ class Poem < ApplicationRecord
 
 		@words.each do |hash|
 			sorted[hash[:syllables]] ||= []
-			sorted[hash[:syllables]] << hash['word']
+			sorted[hash[:syllables]] << hash
 		end
 
 		if !sorted.has_key?(1)
@@ -27,7 +27,9 @@ class Poem < ApplicationRecord
 
 		lines.each do |syllables|
 			invalid = 1
+			linewords = []
 			while invalid
+				linewords = []
 				line = ''
 				while syllables > 0
 					temp = sorted.reject{|k,v| k > syllables}
@@ -35,8 +37,11 @@ class Poem < ApplicationRecord
 					syls = temp.keys[randomize.rand(temp.keys.count)]
 					
 					wurdz = temp[syls]
+
+					selection = wurdz[randomize.rand(wurdz.count)]
 					
-					line = line + ' ' + wurdz[randomize.rand(wurdz.count)]
+					line = line + ' ' + selection['word']
+					linewords << selection
 					
 					syllables -= syls
 				end
@@ -46,8 +51,20 @@ class Poem < ApplicationRecord
 					invalid = nil
 				end
 			end
-			output << line.strip.capitalize
+			output << {line: line.strip.capitalize, linewords: linewords }
 		end
+
+		output = output.map{|m| 
+			{
+				line: m[:line]
+				linewords: m[:linewords].map{|n|
+					{
+						word: n['word'],
+						bill: Bill.find_by(bill_kid: BillWord.find_by(word_kid: n['word_kid']).sample(1).first['bill_kid']
+					}
+				}  
+			}
+		}
 
 		output
 	end

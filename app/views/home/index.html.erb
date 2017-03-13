@@ -50,7 +50,11 @@
 			<hr/>
 			<article>
 				<h3><a href="#">Legislative Language Sources:</a></h3>
-				
+				<div class="large-6 columns">
+					<% @legislation.each do |line| %>
+						<p><%= line[:word] %> was found in <a href ="#{line[:bill]}"><%= line[:bill] %></a></p>
+					<% end %>
+				</div>
 			</article>
 		</div>
  

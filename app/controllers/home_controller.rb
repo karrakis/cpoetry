@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
 	def index
-		@poem = Poem.write_poem
+		@poemset = Poem.write_poem
+		@poem = @poemset.map{|m| m[:line] }
+		@legislation = @poemset.map{|m| m[:linewords]}
 	end
 end
