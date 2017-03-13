@@ -4,7 +4,7 @@ class Poem < ApplicationRecord
 
 	def self.write_poem
 		@words = BillWord.all.sample(500)
-		@words = Word.where(word_kid: @words.map{|m| m[:word_kid]}).reject{|m| m['word'].match(/[^a-z]/) }.map{|m| m.as_json.merge(syllables: self.syllables(m['word'])) }
+		@words = Word.where(word_kid:@words.map{|m| m[:word_kid]}).reject{|m| m['word'].match(/[^a-z]/) }.map{|m| m.as_json.merge(syllables: self.syllables(m['word'])) }
 		@words = @words.map{|m| m[:syllables] > 0 ? m : m.merge({syllables: 1})}
 		
 		randomize = Random.new
@@ -59,8 +59,8 @@ class Poem < ApplicationRecord
 			{
 				line: m[:line],
 				linewords: m[:linewords].map{|n|
-					bill_kid = BillWord.find_by(word_kid: n['word_kid'])
-					bill_kid = bill_kid ? bill_kid.all.sample.first['bill_kid'] : nil
+					bill_kid = BillWord.where(word_kid: n['word_kid'])
+					bill_kid = bill_kid ? bill_kid.all.sample(1).first['bill_kid'] : nil
 					{
 						word: n['word'],
 						bill: Bill.find_by(bill_kid: bill_kid ? bill_kid : 0)
