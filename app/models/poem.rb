@@ -60,7 +60,7 @@ class Poem < ApplicationRecord
 				linewords: m[:linewords].map{|n|
 					{
 						word: n['word'],
-						bill: Bill.find_by(bill_kid: BillWord.find_by(word_kid: n['word_kid']).sample(1).first['bill_kid']
+						bill: Bill.find_by(bill_kid: BillWord.find_by(word_kid: n['word_kid']).sample(1).first['bill_kid'] )
 					}
 				}  
 			}
